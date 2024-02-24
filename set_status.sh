@@ -6,6 +6,8 @@ source "$(dirname "$0")/.env"
 if [ -z ${ZULIP_USERNAME+x} ]; then echo "ZULIP_USERNAME is unset" && exit 1; fi
 if [ -z ${ZULIP_API_KEY+x} ]; then echo "ZULIP_API_KEY is unset" && exit 1; fi
 if [ -z ${ZULIP_DOMAIN+x} ]; then echo "ZULIP_DOMAIN is unset" && exit 1; fi
+if [ -z ${SSID_HOME+x} ]; then echo "SSID_HOME is unset" && exit 1; fi
+if [ -z ${SSID_OFFICE+x} ]; then echo "SSID_OFFICE is unset" && exit 1; fi
 
 
 SSID=$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I | awk -F: '/ SSID/{print $2}')
@@ -28,7 +30,7 @@ if [[ "$CURRENT_DAY" == "Saturday"  ||  "$CURRENT_DAY" == "Sunday" ]]; then
 fi
 
 
-if [ "$SSID" == "mikmarylaunannanet" ]; then
+if [ "$SSID" == "$SSID_HOME" ]; then
     echo "Setting Zulip status to: Arbejder hjemmefra";
     curl -sSX POST $ZULIP_DOMAIN/api/v1/users/me/status \
     -u $ZULIP_USERNAME:$ZULIP_API_KEY \
@@ -36,7 +38,7 @@ if [ "$SSID" == "mikmarylaunannanet" ]; then
     --data-urlencode away=false \
     --data-urlencode emoji_name=house \
     --data-urlencode reaction_type=unicode_emoji
-elif [ "$SSID" == "Reload" ]; then
+elif [ "$SSID" == "$SSID_OFFICE" ]; then
     echo "Setting Zulip status to: På Suomisvej";
     curl -sSX POST $ZULIP_DOMAIN/api/v1/users/me/status \
     -u $ZULIP_USERNAME:$ZULIP_API_KEY \
