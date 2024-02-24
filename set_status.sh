@@ -22,7 +22,7 @@ if [[ "$CURRENT_DAY" == "Saturday"  ||  "$CURRENT_DAY" == "Sunday" ]]; then
     curl -sSX POST $ZULIP_DOMAIN/api/v1/users/me/status \
     -u $ZULIP_USERNAME:$ZULIP_API_KEY \
     --data-urlencode "status_text=✨ Weekend Timez ✨" \
-    --data-urlencode away=false \
+    --data-urlencode away=true \
     --data-urlencode emoji_name=cocktail \
     --data-urlencode reaction_type=unicode_emoji
     echo "---------------------------"
